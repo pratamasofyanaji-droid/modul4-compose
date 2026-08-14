@@ -23,5 +23,5 @@ jobs:
           docker build -t aplikasi-web:latest .
           docker stop web-container || true
           docker rm web-container || true
-          docker run -d -p 8080:80 --name web-container aplikasi-web:latest
+          docker run -d -p 8084:80 --name web-container aplikasi-web:latest
           docker image prune -f 
