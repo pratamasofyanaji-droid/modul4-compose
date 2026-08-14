@@ -1,0 +1,27 @@
+name: Auto Deploy to VPS Docker
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Eksekusi Remote SSH ke VPS
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: 22
+        script: |
+          cd /root/proyek-web-saya
+          git pull origin main
+          docker build -t aplikasi-web:latest .
+          docker stop web-container || true
+          docker rm web-container || true
+          docker run -d -p 8080:80 --name web-container aplikasi-web:latest
+          docker image prune -f 
