@@ -18,10 +18,8 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: 22
         script: |
-          cd /root/proyek-web-saya
+          cd /root/modul4-compose
           git pull origin main
-          docker build -t aplikasi-web:latest .
-          docker stop web-container || true
-          docker rm web-container || true
-          docker run -d -p 8084:80 --name web-container aplikasi-web:latest
+          docker build -t
+          docker compose up -d --build
           docker image prune -f 
